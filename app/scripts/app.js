@@ -1,4 +1,5 @@
 var React = window.React = require('react'),
+    classNames = require('classnames'),
     mountNode = document.getElementById("app");
 
 var MetroCardCalculator = React.createClass({
@@ -33,8 +34,15 @@ var MetroCardCalculator = React.createClass({
         },
         render: function () {
             return <div><form>
-            <input defaultValue={this.props.defaultAmountOnCard} ref='amountOnCard' onChange={this.handleChange}/>
+            <div class="row">
+            <div class="input-field col s6">
+            <input defaultValue={this.props.defaultAmountOnCard} ref='amountOnCard' id='amountOnCard' onChange={this.handleChange} type="text" class="validate"/>
+            <label for='amountOnCard'>Current Amount on Card</label>
+            </div></div>
+            <div class="row">
+            <div class="input-field col s6">
             <input defaultValue = {this.props.defaultFarePrice} ref = 'farePrice' onChange = {this.handleChange}/>
+            </div></div>
             </form></div>;
         }
     });
@@ -70,17 +78,21 @@ var MetroCardCalculator = React.createClass({
         },
         render: function() {
             var rows = this.calculateFareTable(this.props.amountOnCard, this.props.farePrice, .11);
+              
 
-
-            return ( < table className = "striped responsive-table" > < thead > < tr > < th > For this many rides < /th><th>Add this amount</th > < th > Leaving a remainder of < /th><th>Total Amount</th > < /tr></thead > < tbody > {
+            return ( <table className = "striped responsive-table" > < thead > < tr > < th > For this many rides < /th><th>Add this amount</th > < th > Leaving a remainder of < /th><th>Total Amount</th > < /tr></thead > < tbody > {
                     rows.map(function(row, i) {
-                            return ( < tr key = {
-                                i
-                            } > < td > {
-                                row.rides
-                            } < /td ><td>{row.add}</td > < td > {
-                                row.remainder
-                            } < /td ><td>{row.total}</td > < /tr>
+                        var classes = classNames({
+                          'teal': row.remainder < 0.01,
+                          'z-depth-3': row.remainder < 0.01,
+                          'red': row.remainder > 0.05
+                        });
+                        return ( <tr key={i} className={classes}>
+                                     <td>{row.rides}</td>
+                                     <td>{row.add}</td >
+                                     <td>{row.remainder}</td>
+                                     <td>{row.total}</td>
+                                     </tr>
             );})}
             </tbody > < /table>);
         }
