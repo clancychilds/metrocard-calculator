@@ -16,7 +16,7 @@ var MetroCardCalculator = React.createClass({
             });
         },
         render: function() {
-            return <div><InputForm updateInputs = {this.updateInputs}/> <ComputationTable farePrice={this.state.farePrice} amountOnCard={this.state.amountOnCard}/></div>;
+            return <div><InputForm updateInputs = {this.updateInputs}/><div class="divider"></div><ComputationTable farePrice={this.state.farePrice} amountOnCard={this.state.amountOnCard}/></div>;
         }
     });
 
@@ -33,25 +33,20 @@ var MetroCardCalculator = React.createClass({
             };
         },
         render: function () {
-            return <div><form>
-            <div class="row">
-            <div class="input-field col s6">
-            <input defaultValue={this.props.defaultAmountOnCard} ref='amountOnCard' id='amountOnCard' onChange={this.handleChange} type="text" class="validate"/>
+            return <div className='row'><form>
+            <div className="input-field col s12 m4">
+            <input defaultValue={this.props.defaultAmountOnCard} ref='amountOnCard' id='amountOnCard' onChange={this.handleChange} type="number" className="validate"/>
             <label for='amountOnCard'>Current Amount on Card</label>
-            </div></div>
-            <div class="row">
-            <div class="input-field col s6">
-            <input defaultValue = {this.props.defaultFarePrice} ref = 'farePrice' onChange = {this.handleChange}/>
-            </div></div>
+            </div>
+            <div className="input-field col s12 m4 offset-m4">
+            <input defaultValue = {this.props.defaultFarePrice} ref='farePrice' id='farePrice' onChange = {this.handleChange} type="number" className="validate"/>
+            <label for='farePrice'>Fare Price</label>
+            </div>
             </form></div>;
         }
     });
 
     var ComputationTable = React.createClass({
-        calculateFareTableMock: function(amount, fare, bonus) {
-            return([{add:0.10, total:2.75, rides:1},
-                    {add:2.85, total:5.50, rides:2}]);
-        },
         calculateFareTable: function(amount, fare, bonus) {
             var rows = [];
             var minAdd = (fare*2).toFixed(2);
