@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var del = require('del');
+var sass = require('gulp-sass');
 
 
 var path = require('path');
@@ -24,17 +25,17 @@ var reload = browserSync.reload;
 // Styles
 gulp.task('styles', ['sass'  ]);
 
-gulp.task('sass', function() {
-    return gulp.src(['app/styles/**/*.scss', 'app/styles/**/*.css'])
-        .pipe($.rubySass({
+gulp.task('sass', () =>
+    sass(['app/styles/**/*.scss', 'app/styles/**/*.css'],
+        {
             style: 'expanded',
             precision: 10,
             loadPath: ['app/bower_components']
-        }))
+        })
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('dist/styles'))
-        .pipe($.size());
-});
+        .pipe($.size())
+);
 
 gulp.task('stylus', function() {
     return gulp.src(['app/styles/**/*.styl'])
