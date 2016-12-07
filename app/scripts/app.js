@@ -1,6 +1,7 @@
 var React = window.React = require('react'),
     classNames = require('classnames'),
     mountNode = document.getElementById("app");
+var ReactDOM = require('react-dom');
 
 var MetroCardCalculator = React.createClass({
         updateInputs: function(value) {
@@ -22,8 +23,8 @@ var MetroCardCalculator = React.createClass({
 
     var InputForm = React.createClass({
         handleChange: function() {
-          var amount = this.refs.amountOnCard.getDOMNode().value;
-          var fare = this.refs.farePrice.getDOMNode().value;
+          var amount = this.refs.amountOnCard.value;
+          var fare = this.refs.farePrice.value;
           this.props.updateInputs({amount: amount, fare: fare});
         },
         getDefaultProps: function () {
@@ -93,4 +94,4 @@ var MetroCardCalculator = React.createClass({
         }
     });
 
-React.render(<MetroCardCalculator /> , mountNode);
+ReactDOM.render(<MetroCardCalculator /> , mountNode);
