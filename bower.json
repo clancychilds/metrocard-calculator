@@ -1,12 +1,29 @@
 {
   "name": "metrocard-calculator",
-  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Clancy Childs <clancy.childs@dowjones.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/clancychilds/metrocard-calculator",
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "jquery": "~2.1.1",
     "bootstrap-sass-official": ">=3.3.0",
+    "jquery": "~3.1.1",
     "modernizr": "^2.8.3"
-  },
-  "resolutions": {
-    "jquery": "~3.1.1"
   }
 }

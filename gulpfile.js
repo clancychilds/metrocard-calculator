@@ -1,8 +1,12 @@
 'use strict';
 
 var gulp = require('gulp');
+var useref = require('gulp-useref');
+var debug = require('gulp-debug');
 var del = require('del');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var size = require('gulp-size');
 
 
 var path = require('path');
@@ -25,17 +29,17 @@ var reload = browserSync.reload;
 // Styles
 gulp.task('styles', ['sass'  ]);
 
-gulp.task('sass', () =>
-    sass(['app/styles/**/*.scss', 'app/styles/**/*.css'],
-        {
+gulp.task('sass', function(){
+    return gulp.src(['app/styles/**/*.scss', 'app/styles/**/*.css'])
+        .pipe(sass({
             style: 'expanded',
             precision: 10,
             loadPath: ['app/bower_components']
-        })
-        .pipe($.autoprefixer('last 1 version'))
+        }))
+        .pipe(autoprefixer('last 1 version'))
         .pipe(gulp.dest('dist/styles'))
-        .pipe($.size())
-);
+        .pipe(size())
+});
 
 gulp.task('stylus', function() {
     return gulp.src(['app/styles/**/*.styl'])
@@ -85,7 +89,7 @@ gulp.task('buildScripts', function() {
 // HTML
 gulp.task('html', function() {
     return gulp.src('app/*.html')
-        .pipe($.useref())
+        .pipe(useref())
         .pipe(gulp.dest('dist'))
         .pipe($.size());
 });
@@ -119,17 +123,13 @@ gulp.task('clean', function(cb) {
 // Bundle
 gulp.task('bundle', ['styles', 'scripts', 'bower'], function() {
     return gulp.src('./app/*.html')
-        .pipe($.useref.assets())
-        .pipe($.useref.restore())
-        .pipe($.useref())
+        .pipe(useref())
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('buildBundle', ['styles', 'buildScripts', 'bower'], function() {
     return gulp.src('./app/*.html')
-        .pipe($.useref.assets())
-        .pipe($.useref.restore())
-        .pipe($.useref())
+        .pipe(useref())
         .pipe(gulp.dest('dist'));
 });
 
