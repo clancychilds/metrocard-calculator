@@ -5,10 +5,16 @@ var ReactDOM = require('react-dom');
 
 var MetroCardCalculator = React.createClass({
         updateInputs: function(value) {
+          if ('amount' in value) {
             this.setState({
                 amountOnCard: value.amount,
-                farePrice: value.fare
             });
+          }
+          if ('fare' in value) {
+            this.setState({
+                farePrice: value.fare,
+            });
+          }
         },
         getInitialState: function() {
             return ({
@@ -22,10 +28,11 @@ var MetroCardCalculator = React.createClass({
     });
 
     var InputForm = React.createClass({
-        handleChange: function() {
-          var amount = this.refs.amountOnCard.value;
-          var fare = this.refs.farePrice.value;
-          this.props.updateInputs({amount: amount, fare: fare});
+        handleAmountChange: function(e) {
+          this.props.updateInputs({amount: e.target.value});
+        },
+        handleFareChange: function(e) {
+          this.props.updateInputs({fare: e.target.value});
         },
         getDefaultProps: function () {
             return {
@@ -36,11 +43,11 @@ var MetroCardCalculator = React.createClass({
         render: function () {
             return <div className='row'><form>
             <div className="input-field col s12 m4">
-            <input defaultValue={this.props.defaultAmountOnCard} ref='amountOnCard' id='amountOnCard' onChange={this.handleChange} type="number" className="validate"/>
+            <input ref='amountOnCard' id='amountOnCard' onChange={this.handleAmountChange} type="number" min="0" step="0.01"/>
             <label for='amountOnCard'>Current Amount on Card</label>
             </div>
             <div className="input-field col s12 m4 offset-m4">
-            <input defaultValue = {this.props.defaultFarePrice} ref='farePrice' id='farePrice' onChange = {this.handleChange} type="number" className="validate"/>
+            <input defaultValue = {this.props.defaultFarePrice} ref='farePrice' id='farePrice' onChange = {this.handleFareChange} type="number" min="0" step=".01" className="validate"/>
             <label for='farePrice'>Fare Price</label>
             </div>
             </form></div>;
@@ -76,7 +83,7 @@ var MetroCardCalculator = React.createClass({
             var rows = this.calculateFareTable(this.props.amountOnCard, this.props.farePrice, .11);
               
 
-            return ( <table className = "striped responsive-table" > < thead > < tr > < th > For this many rides < /th><th>Add this amount</th > < th > Leaving a remainder of < /th><th>Total Amount</th > < /tr></thead > < tbody > {
+            return ( <table className = "striped responsive-table" >< thead >< tr >< th >For this many rides< /th><th>Add this amount</th >< th > Leaving a remainder of < /th><th>Total Amount</th >< /tr></thead >< tbody > {
                     rows.map(function(row, i) {
                         var classes = classNames({
                           'teal': row.remainder < 0.01,
