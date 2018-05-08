@@ -80,7 +80,7 @@ var MetroCardCalculator = React.createClass({
             return (rows);
         },
         render: function() {
-            var rows = this.calculateFareTable(this.props.amountOnCard, this.props.farePrice, .11);
+            var rows = this.calculateFareTable(this.props.amountOnCard, this.props.farePrice, .05);
               
 
             return ( <table className = "striped responsive-table" >< thead >< tr >< th >For this many rides< /th><th>Add this amount</th >< th > Leaving a remainder of < /th><th>Total Amount</th >< /tr></thead >< tbody > {
